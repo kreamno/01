@@ -2,35 +2,37 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define bingo_SIZE	2
+#define bingo_size 100
 
-void printMatrix(int SIZE[bingo_SIZE][bingo_SIZE])
-{	
-	int i, j;
+int main()
+{
+	int bingo_num;
+	int i;
+	int BINGO[bingo_size];
+ 
+	printf("Enter the number of random numbers (<=100) : ");	// bingo판의 크기를 설정한다. 
+	scanf("%d", &bingo_num);
 	
-	for (i=0; i<bingo_SIZE; i++) {
-		for(j=0; j<bingo_SIZE; j++) {
-			printf("%d", SIZE[i][j]);
+	srand( (unsigned) time(NULL) );	
+	
+	for (i = 0; i < bingo_num; i++)
+		{ 
+		BINGO[i] = rand() % 100;	
 		}
-		printf("\n");
+
+	for (i = 0; i < bingo_num; i++)
+	{
+	if (i % 5 == 0)				//빙고판의 가로축에 있는 숫자의 개수를 5로 설정 
+	printf("\n");
+	printf("%5d", BINGO[i]);
+	
 	}
-		return;
+	printf("\n");
+	
+	return 0;
+
 }
 
-int	main(void){				//빙고판 만드는 함 수 
-	int A,i;	
-	int SIZE[bingo_SIZE][bingo_SIZE];
-	
-	
-	A= bingo_SIZE*bingo_SIZE;
-	printf("%d 개의 숫자를 입력하시오: ", A);
-	
-	scanf("%d ", &SIZE[i][i]);
-	
-	printf("User Bingo Board\n");
-	printMatrix(SIZE);
-	
-	return;
-}
+
 
 
