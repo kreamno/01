@@ -4,7 +4,7 @@
 
 #define bingo_size 25
 
-int main()											//빙고판을 설정할 때 빙고의 사이즈와 빙고판에서 가로축의 크기를 확인하여 바꾸어야 한다. 
+int initiate_bingo()											//빙고판을 설정할 때 빙고의 사이즈와 빙고판에서 가로축의 크기를 확인하여 바꾸어야 한다. 
 {
 	int bingo_num;
 	int i;
@@ -49,6 +49,39 @@ int main()											//빙고판을 설정할 때 빙고의 사이즈와 빙고판에서 가로축의 크
 	return 0;
 
 }
+
+
+int print_bingo()
+
+int get_number_byMe()
+{
+	int x[25]; 
+	int i, j;
+	
+	while { 
+    printf("enter a number: \n"); 
+    scanf("%d", &x[i]); 
+    if (i >=0 && i<= 24)
+	{ 
+	 	for(i=0; i<25; i++) { 
+	 		for(j=0;j<i;j++){
+    			if(x[i] == x[j]) {
+     			printf("It is overlapped number.\n");
+    			}
+    		}
+		}
+	}
+	if else 
+	{ 
+      	printf("Wrong number. Enter a number: \n"); 
+    } 
+	} 
+	
+	return 0;
+}
+int get_number_byCom()
+int process_bingo()
+int count_bingo()
 
 
 
