@@ -2,9 +2,16 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define Bingo_size 5
+#define Bingo_size0 25
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 #define bingo_size 25
 
-int initiate_bingo()											//빙고판을 설정할 때 빙고의 사이즈와 빙고판에서 가로축의 크기를 확인하여 바꾸어야 한다. 
+int initiate_bingo()					//빙고판을 설정할 때 빙고의 사이즈와 빙고판에서 가로축의 크기를 확인하여 바꾸어야 한다. 
 {
 	int bingo_num;
 	int i;
@@ -51,16 +58,35 @@ int initiate_bingo()											//빙고판을 설정할 때 빙고의 사이즈와 빙고판에서 �
 }
 
 
-int print_bingo()
+int print_bingo(int bing[5][5])			//빙고판의 현재 상황 출력 
+{
+	int i,j;
+	
+	for(i=0;i<Bingo_size;i++){
+		for(j=0;j<Bingo_size;j++){
+			if(bing[i][j] != 0){
+				printf("%5d", bing[i][j]);
+			}
+			else{
+				printf("error");
+			}
+		}
+	}
+}
+
 
 int get_number_byMe()
 {
 	int x[25]; 
-	int i, j;
+	int i, j, retry;
 	
-	while { 
+	do { 
+	
     printf("enter a number: \n"); 
     scanf("%d", &x[i]); 
+    
+    retry = 0;
+    
     if (i >=0 && i<= 24)
 	{ 
 	 	for(i=0; i<25; i++) { 
@@ -71,18 +97,33 @@ int get_number_byMe()
     		}
 		}
 	}
-	if else 
+	else 
 	{ 
       	printf("Wrong number. Enter a number: \n"); 
     } 
-	} 
+	} while(retry==1);
 	
 	return 0;
 }
-int get_number_byCom()
+
+int get_number_byCom()		//컴퓨터에게 숫자 받기 
+{
+	int number;
+	int i, re;
+
+	
+	
+}
 int process_bingo()
 int count_bingo()
 
+int main(void)
+{
+	int numb;
+	int user0, com0;
+	
+	initiate_bingo();
+	
 
-
-
+	return 0;
+}
