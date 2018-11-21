@@ -116,13 +116,66 @@ int get_number(int turn)		//사용자에게 입력을 받는 것과 컴퓨터의 입력을 동시에 �
 	return numb;
 }
 
-int process_bingo(int bingo_board[5][5]){		//빙고판의 숫자 지우는 함수 
+int process_bingo(int bingo_board[5][5], int numb){		//입력받은 수를 -1로 만드는 함수 
+	int i,j;
+	
+	for(j=0;j<bingo_size;j++){
+		for(i=0;i<bingo_size;i++){
+			if(bingo_board[j][i] == numb){
+				bingo_board[j][i] = -1;
+			}
+		}
+	} 
+	
+}
+
+int count_bingo(int bingo_board[5][5]){		//빙고판의 숫자 지우는 함수 
 
 	int i, j, sum;
 	
-	for
+	for(j=0;j<bingo_size;j++){		// 가로 축에 대한 확인 
+		sum = 0;
+		
+		for(i=0;i<bingo_size;i++) {
+		sum += bingo_board[j][i];
+		}
+		
+		if(sum==-5){
+			return 1;
+		}
+	}
+	
+	for	(i=0;i<bingo_size;i++){		//세로 축에 대한 확인 
+		sum = 0;
+		
+		for(j=0;j<bingo_size;j++){
+			sum += bingo_board[j][i];
+		}
+		if(sum==-5){
+			return 1;
+		}
+	}
+	
+	sum = 0;
+	
+	for(i=0;i<bingo_size;i++){		//대각선에 대한 확인 
+		sum += bingo_board[i][i];
+	}
+	if(sum==-5){
+		return 1;
+	}
+	
+	sum=0;
+	
+	for(i=0;i<bingo_size;i++){		//대각선에 대한 확인 
+		sum += bingo_board[i][bingo_size - i - 1];
+	}
+	if(sum==-5){
+		return 1;
+	}
+	return 0;
 }
-int count_bingo()
+	
 
 int main(void)
 {
