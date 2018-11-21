@@ -15,37 +15,25 @@ int count = 0;
 int user_bingo[5][5];
 int com_bingo[5][5];
 
-int initiate_bingo()					//빙고판을 설정할 때 빙고의 사이즈와 빙고판에서 가로축의 크기를 확인하여 바꾸어야 한다. 
-{
-	int bingo_num;
-	int i;
-	int BINGO1[bingo_size];
-	int BINGO0[bingo_size];
- 
-	printf("Enter the number of random numbers (<=25) : ");		// bingo판의 크기를 설정한다. 
-	scanf("%d", &bingo_num);
+int initiate_bingo(){				//빙고판을 초기화 하는 함수
+	srand((unsigned int)time(NULL));
 	
-	srand( (unsigned) time(NULL) );	
-	
-	for (i = 0; i < bingo_num; i++)			
-		{ 
-		BINGO1[i] = rand() % 25;	
-		}
-	
-		printf("your bingo is:\n");			
-		for (i = 0; i < bingo_num; i++)
-		{
-		if (i % 5 == 0)
-		printf("\n");							//빙고판의 가로축에 있는 숫자의 개수를 5로 설정 
-		printf("%5d", BINGO1[i]);
-		}
-		printf("\n");
-	
-	
-	return 0;
-
+	random((int*)user_bingo);
+	random((int*)com_bingo);
 }
 
+int random(int* bing_board){			// 최초빙고판의 숫자의 불규칙성을 만들어 주는 함 수 
+	int i, k;	
+	
+	for(i=0;i<Bingo_size0;i++){
+		bing_board[i] = i+1;
+	}
+	for(i=0;i<Bingo_size0;i++){
+		k = &bing_board[i];
+		bing_board[i] = bing_board[rand()%25];
+		k = &bing_board[rand()%25];
+	}
+}
 
 int print_bingo(int bing[5][5])			//빙고판의 현재 상황 출력 
 {
@@ -79,8 +67,14 @@ int get_number(int turn)		//사용자에게 입력을 받는 것과 컴퓨터의 입력을 동시에 �
     	
 			if(numb < 1 || numb >25){
 	 			retry=1;
-				 };
-				 
+				 }
+		}	
+	else{							//컴퓨터의 입력 
+			numb = rand() %25;
+		} 
+		
+	if(retry==0){
+		
 			for(i=0; i<count; i++){
 				if(checked[i] == numb) {
 					retry = 1;
@@ -88,13 +82,10 @@ int get_number(int turn)		//사용자에게 입력을 받는 것과 컴퓨터의 입력을 동시에 �
 				}
 			}
 		}
-		
-		else{							//컴퓨터의 입력 
-			numb = rand() %25 +1;
-		} 
-		}while(retry==1);
+	}while(retry==1);
 	
 	checked[numb++] = numb;
+	
 	if(turn == 0){
 		printf("user choose %d \n", numb);
 	}
