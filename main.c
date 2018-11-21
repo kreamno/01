@@ -14,49 +14,34 @@ int count = 0;
 
 int user_bingo[5][5];
 int com_bingo[5][5];
-
-int initiate_bingo(){				//빙고판을 초기화 하는 함수
-	srand((unsigned int)time(NULL));
 	
-	print_random_bingo((int*)user_bingo);
-	print_random_bingo((int*)com_bingo);
+void swap(int*a, int*b){	 
+	int c;
+	c=*a;
+	*a=*b;
+	*b=c;
 }
 
-int print_random_bingo(int board[bingo_size][bingo_size]){
-	int i, j, k, random;
-	int bingo0[Bingo_size0];
-	
-	srand((unsigned int)time(NULL));
+void make_random(int* board){			//난수 발생 함 수 
+	int i;
 	
 	for(i=0;i<Bingo_size0;i++){
-		random = rand() %25 +1;
-		
-		for(j=0;j<Bingo_size0;j++)
-		{
-			if (bingo0[j]  == random)
-			{
-				break;
-			}
-		}
-		if(i==j)
-		{
-			bingo0[i++] = random;	
-		}
+		board[i] = i+1;
 	}
-	
-	k=0;
-	
-	for(i=0;i<bingo_size;i++){
-		for(j=0;j<bingo_size;j++){
-			board[i][j] = bingo0[k++];
-		}
+	for(i=0;i<Bingo_size0;i++){
+		swap(&board[i], &board[rand()%25]);
 	}
-	for(i=0;i<bingo_size;i++){
-		for(j=0;j<bingo_size;j++){
-			printf("%5d", board[i][j]);
-		}
-	}	printf("\n\n");
 }
+
+int initiate_bingo(){				//빙고판을 초기화 하는 함수
+
+	srand((unsigned int)time(NULL));
+	
+	make_random((int*)user_bingo);
+	make_random((int*)com_bingo);
+	
+}
+
 
 
 void print_bingo(int bing[bingo_size][bingo_size])			//빙고판의 현재 상황 출력 
@@ -65,7 +50,7 @@ void print_bingo(int bing[bingo_size][bingo_size])			//빙고판의 현재 상황 출력
 	
 	for(i=0;i<bingo_size;i++){
 		for(j=0;j<bingo_size;j++){
-			printf("%7d\n", bing[i][j]);
+			printf("%7d", bing[i][j]);
 		}
 		printf("\n\n");
 	}
@@ -170,7 +155,9 @@ int count_bingo(int bingo_board[5][5]){		//빙고 확인 함수
 	if(sum==-5){
 		return 1;
 	}
+	else {
 	return 0;
+	}
 }
 	
 	
@@ -182,7 +169,7 @@ int main(void)
 	initiate_bingo();
 	
 	do{
-		print_random_bingo(user_bingo);
+		print_bingo(user_bingo);
 		
 		numb = get_number(0);			//사용자 숫자 선택 
 		process_bingo(user_bingo, numb);
@@ -198,21 +185,17 @@ int main(void)
 		}while((user_win==0)&&(com_win==0));
 		
 		printf("사용자 빙고판 \n");
-		print_random_bingo(user_bingo);
+		print_bingo(user_bingo);
 		
 		printf("컴퓨터 빙고판 \n");
-		print_random_bingo(com_bingo);
+		print_bingo(com_bingo);
 		
-				if(user_win = 1){			// 승자 출력 
+				if(user_win == 1){			// 승자 출력 
 					printf("user wins\n");
 				}
-				if(com_win = 1){
+				if(com_win == 1){
 					printf("com wins\n");
 				}
-				else{
-				printf("no winner\n");
-			}
 	
-
 	return 0;
 }
