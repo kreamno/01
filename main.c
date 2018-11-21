@@ -12,11 +12,14 @@
 int checked[25];
 int count = 0;
 
+int user_bingo[5][5];
+int com_bingo[5][5];
+
 int initiate_bingo()					//ºù°íÆÇÀ» ¼³Á¤ÇÒ ¶§ ºù°íÀÇ »çÀÌÁî¿Í ºù°íÆÇ¿¡¼­ °¡·ÎÃàÀÇ Å©±â¸¦ È®ÀÎÇÏ¿© ¹Ù²Ù¾î¾ß ÇÑ´Ù. 
 {
 	int bingo_num;
 	int i;
-	int BINGO[bingo_size];
+	int BINGO1[bingo_size];
 	int BINGO0[bingo_size];
  
 	printf("Enter the number of random numbers (<=25) : ");		// bingoÆÇÀÇ Å©±â¸¦ ¼³Á¤ÇÑ´Ù. 
@@ -24,9 +27,9 @@ int initiate_bingo()					//ºù°íÆÇÀ» ¼³Á¤ÇÒ ¶§ ºù°íÀÇ »çÀÌÁî¿Í ºù°íÆÇ¿¡¼­ °¡·ÎÃàÀ
 	
 	srand( (unsigned) time(NULL) );	
 	
-	for (i = 0; i < bingo_num; i++)				//user's bingo
+	for (i = 0; i < bingo_num; i++)			
 		{ 
-		BINGO[i] = rand() % 25;	
+		BINGO1[i] = rand() % 25;	
 		}
 	
 		printf("your bingo is:\n");			
@@ -34,22 +37,7 @@ int initiate_bingo()					//ºù°íÆÇÀ» ¼³Á¤ÇÒ ¶§ ºù°íÀÇ »çÀÌÁî¿Í ºù°íÆÇ¿¡¼­ °¡·ÎÃàÀ
 		{
 		if (i % 5 == 0)
 		printf("\n");							//ºù°íÆÇÀÇ °¡·ÎÃà¿¡ ÀÖ´Â ¼ýÀÚÀÇ °³¼ö¸¦ 5·Î ¼³Á¤ 
-		printf("%5d", BINGO[i]);
-		}
-		printf("\n");
-	
-	
-	for (i = 0; i < bingo_num; i++)				//computer's bingo
-		{ 
-		BINGO0[i] = rand() % 25;	
-		}
-	
-		printf("computer's bingo is:\n");	
-		for (i = 0; i < bingo_num; i++)
-		{
-		if (i % 5 == 0)
-		printf("\n");							//ºù°íÆÇÀÇ °¡·ÎÃà¿¡ ÀÖ´Â ¼ýÀÚÀÇ °³¼ö¸¦ 5·Î ¼³Á¤ 
-		printf("%5d", BINGO0[i]);
+		printf("%5d", BINGO1[i]);
 		}
 		printf("\n");
 	
@@ -116,7 +104,7 @@ int get_number(int turn)		//»ç¿ëÀÚ¿¡°Ô ÀÔ·ÂÀ» ¹Þ´Â °Í°ú ÄÄÇ»ÅÍÀÇ ÀÔ·ÂÀ» µ¿½Ã¿¡ ¹
 	return numb;
 }
 
-int process_bingo(int bingo_board[5][5], int numb){		//ÀÔ·Â¹ÞÀº ¼ö¸¦ -1·Î ¸¸µå´Â ÇÔ¼ö 
+int process_bingo(int bingo_board[5][5], int numb){		//ÀÔ·Â¹ÞÀº ¼ö¸¦ ¿ø·¡ ¼ö¸¦ Áö¿ì°í  -1·Î ¸¸µå´Â ÇÔ¼ö 
 	int i,j;
 	
 	for(j=0;j<bingo_size;j++){
@@ -129,7 +117,7 @@ int process_bingo(int bingo_board[5][5], int numb){		//ÀÔ·Â¹ÞÀº ¼ö¸¦ -1·Î ¸¸µå´Â
 	
 }
 
-int count_bingo(int bingo_board[5][5]){		//ºù°íÆÇÀÇ ¼ýÀÚ Áö¿ì´Â ÇÔ¼ö 
+int count_bingo(int bingo_board[5][5]){		//ºù°í È®ÀÎ ÇÔ¼ö 
 
 	int i, j, sum;
 	
@@ -176,13 +164,44 @@ int count_bingo(int bingo_board[5][5]){		//ºù°íÆÇÀÇ ¼ýÀÚ Áö¿ì´Â ÇÔ¼ö
 	return 0;
 }
 	
-
+	
 int main(void)
 {
-	int numb;
-	int user0, com0;
+	int numb, win;
+	int user_win, com_win;
 	
 	initiate_bingo();
+	
+	do{
+		print_bingo(user_bingo);
+		
+		numb = get_number(0);			//»ç¿ëÀÚ ¼ýÀÚ ¼±ÅÃ 
+		process_bingo(user_bingo, numb);
+		process_bingo(com_bingo, numb);
+		
+		numb= get_number(1);			//ÄÄÇ»ÅÍ ¼ýÀÚ ¼±ÅÃ 
+		process_bingo(user_bingo, numb);
+		process_bingo(com_bingo, numb);
+		
+		user_win = count_bingo(user_bingo);
+		com_win = count_bingo(com_bingo);
+		}while((user_win==0)&&(com_win==0));
+		
+		printf("»ç¿ëÀÚ ºù°íÆÇ \n");
+		print_bingo(user_bingo);
+		
+		printf("ÄÄÇ»ÅÍ ºù°íÆÇ \n");
+		print_bingo(com_bingo);
+		
+				if(user_win = 1){			// ½ÂÀÚ Ãâ·Â 
+					printf("user wins\n");
+				}
+				if(com_win = 1){
+					printf("com wins\n");
+				}
+				else{
+				printf("no winner\n");
+			}
 	
 
 	return 0;
