@@ -2,14 +2,15 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define Bingo_size 5
+#define bingo_size 5
 #define Bingo_size0 25
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-#define bingo_size 25
+int checked[25];
+int count = 0;
 
 int initiate_bingo()					//빙고판을 설정할 때 빙고의 사이즈와 빙고판에서 가로축의 크기를 확인하여 바꾸어야 한다. 
 {
@@ -62,8 +63,8 @@ int print_bingo(int bing[5][5])			//빙고판의 현재 상황 출력
 {
 	int i,j;
 	
-	for(i=0;i<Bingo_size;i++){
-		for(j=0;j<Bingo_size;j++){
+	for(i=0;i<bingo_size;i++){
+		for(j=0;j<bingo_size;j++){
 			if(bing[i][j] != 0){
 				printf("%5d", bing[i][j]);
 			}
@@ -72,49 +73,55 @@ int print_bingo(int bing[5][5])			//빙고판의 현재 상황 출력
 			}
 		}
 	}
-}
-
-
-int get_number_byMe()
-{
-	int x[25]; 
-	int i, j, retry;
-	
-	do { 
-	
-    printf("enter a number: \n"); 
-    scanf("%d", &x[i]); 
-    
-    retry = 0;
-    
-    if (i >=0 && i<= 24)
-	{ 
-	 	for(i=0; i<25; i++) { 
-	 		for(j=0;j<i;j++){
-    			if(x[i] == x[j]) {
-     			printf("It is overlapped number.\n");
-    			}
-    		}
-		}
-	}
-	else 
-	{ 
-      	printf("Wrong number. Enter a number: \n"); 
-    } 
-	} while(retry==1);
-	
 	return 0;
 }
 
-int get_number_byCom()		//컴퓨터에게 숫자 받기 
-{
-	int number;
-	int i, re;
 
+int get_number(int turn)		//사용자에게 입력을 받는 것과 컴퓨터의 입력을 동시에 받음 
+{
+	int numb; 
+	int i, retry;
 	
+	do { 
+		retry = 0;
 	
+	if(turn==0){								//사용자에게 받는 입력 = 0
+		printf("enter a number: \n"); 
+    	scanf("%d", &numb);
+    	
+			if(numb < 1 || numb >25){
+	 			retry=1;
+				 };
+				 
+			for(i=0; i<count; i++){
+				if(checked[i] == numb) {
+					retry = 1;
+					break;
+				}
+			}
+		}
+		
+		else{							//컴퓨터의 입력 
+			numb = rand() %25 +1;
+		} 
+		}while(retry==1);
+	
+	checked[numb++] = numb;
+	if(turn == 0){
+		printf("user choose %d \n", numb);
+	}
+	else{
+		printf("computer choose %d \n", numb);
+	}
+	return numb;
 }
-int process_bingo()
+
+int process_bingo(int bingo_board[5][5]){		//빙고판의 숫자 지우는 함수 
+
+	int i, j, sum;
+	
+	for
+}
 int count_bingo()
 
 int main(void)
